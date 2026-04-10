@@ -2,15 +2,11 @@
 session_start();
 require_once 'config.php';
 
-$titrePage = 'Ajouter une dépense';
-require_once 'header.php';
-
 if (!isset($_SESSION['email'])) {
     header("Location: login.php");
     exit();
 }
 
-// Récupérer toutes les sous-catégories groupées par catégorie
 $stmt = $pdo->prepare("
     SELECT 
         E_sous_categories.id AS sous_categorie_id,
@@ -37,9 +33,6 @@ $errors = [];
 $montant = '';
 $sous_categorie_id = $_GET['sous_categorie_id'] ?? '';
 $date_depense = date('Y-m-d');
-
-// Pré-sélectionner la catégorie si on vient de detail.php
-$categorie_preselect = $_GET['categorie_id'] ?? '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $montant = trim($_POST['montant'] ?? '');
@@ -77,12 +70,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ]);
 
         $_SESSION['success_message'] = 'Dépense ajoutée avec succès !';
-        header("Location: accueil.php");
+        header("Location: detail.php?id=" . $sous_categorie_id);
         exit();
     }
 }
 
 $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+
+$titrePage = 'Ajouter une dépense';
+require_once 'header.php';
 ?>
 
 <a href="accueil.php" class="retour-lien">← Retour à l'accueil</a>
@@ -134,4 +130,6 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
     </form>
 </div>
 
-<?php require_once 'footer.php'; ?>
+    </main>
+</body>
+</html>

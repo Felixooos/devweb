@@ -27,9 +27,8 @@ if (!isset($_POST['id']) || !ctype_digit($_POST['id'])) {
 }
 
 $id = $_POST['id'];
-$categorie_id = $_POST['categorie_id'] ?? '';
+$sous_categorie_id = $_POST['sous_categorie_id'] ?? '';
 
-// Vérifier que la dépense appartient à l'utilisateur connecté
 $stmt = $pdo->prepare("SELECT * FROM E_depenses WHERE id = :id AND utilisateur_id = :utilisateur_id");
 $stmt->execute([
     'id' => $id,
@@ -51,8 +50,8 @@ $stmt->execute([
 
 $_SESSION['success_message'] = 'Dépense supprimée avec succès !';
 
-if (!empty($categorie_id) && ctype_digit($categorie_id)) {
-    header("Location: detail.php?id=" . $categorie_id);
+if (!empty($sous_categorie_id) && ctype_digit($sous_categorie_id)) {
+    header("Location: detail.php?id=" . $sous_categorie_id);
 } else {
     header("Location: accueil.php");
 }

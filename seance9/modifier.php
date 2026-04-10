@@ -2,9 +2,6 @@
 session_start();
 require_once 'config.php';
 
-$titrePage = 'Modifier une sous-catégorie';
-require_once 'header.php';
-
 if (!isset($_SESSION['email'])) {
     header("Location: login.php");
     exit();
@@ -17,7 +14,6 @@ if (!isset($_GET['id']) || !ctype_digit($_GET['id'])) {
 
 $id = $_GET['id'];
 
-// Récupérer la sous-catégorie et sa catégorie parente
 $stmt = $pdo->prepare('
     SELECT E_sous_categories.id, E_sous_categories.nom, E_sous_categories.budget_max, 
            E_sous_categories.categorie_id, E_categories.nom AS categorie_nom
@@ -56,15 +52,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute([$budget_max, $id]);
 
         $_SESSION['success_message'] = 'Budget modifié avec succès !';
-        header("Location: detail.php?id=" . $sous_categorie['categorie_id']);
+        header("Location: detail.php?id=" . $id);
         exit();
     }
 }
 
 $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+
+$titrePage = 'Modifier - ' . $sous_categorie['nom'];
+require_once 'header.php';
 ?>
 
-<a href="detail.php?id=<?php echo $sous_categorie['categorie_id']; ?>" class="retour-lien">← Retour à <?php echo htmlspecialchars($sous_categorie['categorie_nom']); ?></a>
+<a href="detail.php?id=<?php echo $id; ?>" class="retour-lien">← Retour à <?php echo htmlspecialchars($sous_categorie['nom']); ?></a>
 
 <div class="form-container">
     <h2>Modifier : <?php echo htmlspecialchars($sous_categorie['nom']); ?></h2>
@@ -90,4 +89,6 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
     </form>
 </div>
 
-<?php require_once 'footer.php'; ?>
+    </main>
+</body>
+</html>
