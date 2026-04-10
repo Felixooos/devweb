@@ -29,9 +29,47 @@ if (!$sous_categorie) {
     exit();
 }
 
-if (!isset($_SESSION['csrf_token'])) {
-    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+$errors = [];
+$montant = '';
+$date_depense = date('Y-m-d');
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $montant = trim($_POST['montant'] ?? '');
+    $date_depense = $_POST['date_depense'] ?? '';
+    $tokenForm = $_POST['csrf_token'] ?? '';
+    $tokenSession = $_SESSION['csrf_token'] ?? '';
+
+    if (empty($tokenForm) || $tokenForm !== $tokenSession) {
+        $errors[] = "Erreur de sécurité. Veuillez réessayer.";
+    }
+
+    if ($montant === '' || !is_numeric($montant) || $montant <= 0) {
+        $errors[] = 'Le montant doit être un nombre positif.';
+    }
+
+    if (empty($date_depense)) {
+        $errors[] = 'La date de dépense est obligatoire.';
+    }
+
+    if (empty($errors)) {
+        $stmt = $pdo->prepare("
+            INSERT INTO E_depenses (utilisateur_id, sous_categorie_id, montant, date_depense, date_saisie) 
+            VALUES (:utilisateur_id, :sous_categorie_id, :montant, :date_depense, NOW())
+        ");
+        $stmt->execute([
+            'utilisateur_id' => $_SESSION['id'],
+            'sous_categorie_id' => $sous_categorie_id,
+            'montant' => $montant,
+            'date_depense' => $date_depense
+        ]);
+
+        $_SESSION['success_message'] = 'Dépense ajoutée avec succès !';
+        header("Location: detail.php?id=" . $sous_categorie_id);
+        exit();
+    }
 }
+
+$_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 
 $stmt = $pdo->prepare("
     SELECT id, montant, date_depense, date_saisie
@@ -74,10 +112,7 @@ require_once 'header.php';
     <?php unset($_SESSION['success_message']); ?>
 <?php endif; ?>
 
-<div class="section-header">
-    <h2><?php echo htmlspecialchars($sous_categorie['icone'] . ' ' . $sous_categorie['categorie_nom'] . ' > ' . $sous_categorie['nom']); ?></h2>
-    <a href="ajouter_depense.php?sous_categorie_id=<?php echo $sous_categorie_id; ?>" class="btn btn-primary btn-small">+ Ajouter une dépense</a>
-</div>
+<h2><?php echo htmlspecialchars($sous_categorie['icone'] . ' ' . $sous_categorie['categorie_nom'] . ' > ' . $sous_categorie['nom']); ?></h2>
 
 <div class="resume-sous-categorie">
     <table class="tableau-budget">
@@ -137,6 +172,36 @@ require_once 'header.php';
         </tfoot>
     </table>
 <?php endif; ?>
+
+<div class="form-container" style="margin-top: 30px; max-width: 100%;">
+    <h3>Ajouter une dépense</h3>
+
+    <?php if (!empty($errors)): ?>
+        <div class="message-erreur">
+            <?php foreach ($errors as $error): ?>
+                <p><?php echo htmlspecialchars($error); ?></p>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+
+    <form method="POST">
+        <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+
+        <div class="form-group">
+            <label for="montant">Montant (€)</label>
+            <input type="number" id="montant" name="montant" step="0.01" min="0.01" 
+                   value="<?php echo htmlspecialchars($montant); ?>" required>
+        </div>
+
+        <div class="form-group">
+            <label for="date_depense">Date de la dépense</label>
+            <input type="date" id="date_depense" name="date_depense" 
+                   value="<?php echo htmlspecialchars($date_depense); ?>" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Ajouter</button>
+    </form>
+</div>
 
     </main>
 </body>

@@ -13,8 +13,7 @@
             <?php if (isset($_SESSION['email'])): ?>
                 <div class="nav-links">
                     <span>Bonjour, <?php echo htmlspecialchars($_SESSION['prenom']); ?></span>
-                    <a href="accueil.php">Accueil</a>
-                    <a href="ajouter_depense.php">Ajouter une dépense</a>
+                    <a href="accueil.php">Tableau de bord</a>
                     <a href="logout.php">Déconnexion</a>
                 </div>
             <?php endif; ?>

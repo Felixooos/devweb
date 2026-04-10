@@ -111,7 +111,6 @@ function getBgColorClass($depense, $budget_max)
 
 <div class="section-header">
     <h2>Budget par catégorie</h2>
-    <a href="ajouter_depense.php" class="btn btn-primary btn-small">+ Ajouter une dépense</a>
 </div>
 
 <?php if (empty($categories)): ?>
