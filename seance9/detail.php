@@ -27,6 +27,10 @@ if (!$categorie) {
     exit();
 }
 
+if (!isset($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 // Récupérer les sous-catégories avec le total des dépenses du mois
 $stmt = $pdo->prepare("
     SELECT 
@@ -142,9 +146,13 @@ function getColorClassDetail($depense, $budget_max)
                     </div>
                     <div class="depense-actions">
                         <span class="depense-montant">-<?php echo number_format($depense['montant'], 2, ',', ' '); ?> €</span>
-                        <a href="supprimer_depense.php?id=<?php echo $depense['id']; ?>&categorie_id=<?php echo $categorie_id; ?>" 
-                           class="btn btn-danger btn-small"
-                           onclick="return confirm('Supprimer cette dépense ?');">Supprimer</a>
+                        <form action="supprimer_depense.php" method="POST" style="display:inline;" 
+                              onsubmit="return confirm('Supprimer cette dépense ?');">
+                            <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+                            <input type="hidden" name="id" value="<?php echo $depense['id']; ?>">
+                            <input type="hidden" name="categorie_id" value="<?php echo $categorie_id; ?>">
+                            <button type="submit" class="btn btn-danger btn-small">Supprimer</button>
+                        </form>
                     </div>
                 </div>
             <?php endforeach; ?>

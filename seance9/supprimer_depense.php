@@ -7,13 +7,27 @@ if (!isset($_SESSION['email'])) {
     exit();
 }
 
-if (!isset($_GET['id']) || !ctype_digit($_GET['id'])) {
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header("Location: accueil.php");
     exit();
 }
 
-$id = $_GET['id'];
-$categorie_id = $_GET['categorie_id'] ?? '';
+$tokenForm = $_POST['csrf_token'] ?? '';
+$tokenSession = $_SESSION['csrf_token'] ?? '';
+
+if (empty($tokenForm) || $tokenForm !== $tokenSession) {
+    $_SESSION['error_message'] = "Erreur de sécurité. Veuillez réessayer.";
+    header("Location: accueil.php");
+    exit();
+}
+
+if (!isset($_POST['id']) || !ctype_digit($_POST['id'])) {
+    header("Location: accueil.php");
+    exit();
+}
+
+$id = $_POST['id'];
+$categorie_id = $_POST['categorie_id'] ?? '';
 
 // Vérifier que la dépense appartient à l'utilisateur connecté
 $stmt = $pdo->prepare("SELECT * FROM E_depenses WHERE id = :id AND utilisateur_id = :utilisateur_id");
