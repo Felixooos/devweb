@@ -1,0 +1,373 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 15px 30px;
+}
+
+header nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo {
+    color: white;
+    text-decoration: none;
+    font-size: 1.4em;
+    font-weight: bold;
+}
+
+header .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+header .nav-links a {
+    color: #ecf0f1;
+    text-decoration: none;
+}
+
+header .nav-links a:hover {
+    text-decoration: underline;
+}
+
+header .nav-links span {
+    color: #bdc3c7;
+}
+
+main {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    color: #777;
+    margin-top: 40px;
+}
+
+/* Budget global */
+.budget-global {
+    background: white;
+    border-radius: 8px;
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.budget-global h2 {
+    margin-bottom: 15px;
+    color: #2c3e50;
+}
+
+.budget-montant {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.budget-restant {
+    font-size: 1.2em;
+    margin-top: 10px;
+}
+
+.budget-barre {
+    width: 100%;
+    height: 20px;
+    background-color: #ecf0f1;
+    border-radius: 10px;
+    margin-top: 15px;
+    overflow: hidden;
+}
+
+.budget-barre-remplissage {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 0.3s ease;
+}
+
+/* Catégories */
+.categories-liste {
+    display: grid;
+    gap: 15px;
+}
+
+.categorie-carte {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    text-decoration: none;
+    color: #333;
+    transition: transform 0.2s;
+    display: block;
+}
+
+.categorie-carte:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.categorie-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.categorie-nom {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.categorie-icone {
+    font-size: 1.5em;
+}
+
+.categorie-montants {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 0.95em;
+    color: #555;
+}
+
+/* Sous-catégories */
+.sous-categories-liste {
+    display: grid;
+    gap: 12px;
+}
+
+.sous-categorie-carte {
+    background: white;
+    border-radius: 8px;
+    padding: 15px 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sous-categorie-info {
+    flex: 1;
+}
+
+.sous-categorie-nom {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.sous-categorie-budget {
+    font-size: 0.9em;
+    color: #777;
+}
+
+.sous-categorie-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.sous-categorie-montant {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+/* Couleurs de statut */
+.vert { color: #27ae60; }
+.orange { color: #f39c12; }
+.rouge { color: #e74c3c; }
+
+.bg-vert { background-color: #27ae60; }
+.bg-orange { background-color: #f39c12; }
+.bg-rouge { background-color: #e74c3c; }
+
+/* Formulaires */
+.form-container {
+    background: white;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.form-container h2 {
+    margin-bottom: 20px;
+    color: #2c3e50;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    text-decoration: none;
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: #3498db;
+    color: white;
+    width: 100%;
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+}
+
+.btn-secondary {
+    background-color: #95a5a6;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #7f8c8d;
+}
+
+.btn-danger {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #c0392b;
+}
+
+.btn-small {
+    padding: 5px 12px;
+    font-size: 0.85em;
+}
+
+/* Messages */
+.message-erreur {
+    background-color: #fce4e4;
+    color: #e74c3c;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.message-succes {
+    background-color: #e4fce4;
+    color: #27ae60;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+/* Page connexion */
+.login-container {
+    max-width: 400px;
+    margin: 60px auto;
+}
+
+.login-container p {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.login-container a {
+    color: #3498db;
+}
+
+/* Retour */
+.retour-lien {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #3498db;
+    text-decoration: none;
+}
+
+.retour-lien:hover {
+    text-decoration: underline;
+}
+
+/* Depenses liste */
+.depenses-liste {
+    margin-top: 20px;
+}
+
+.depense-item {
+    background: white;
+    border-radius: 8px;
+    padding: 12px 20px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.depense-info {
+    font-size: 0.9em;
+    color: #777;
+}
+
+.depense-montant {
+    font-weight: bold;
+    font-size: 1.1em;
+    color: #e74c3c;
+}
+
+.depense-actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* Section titre */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.section-header h2 {
+    color: #2c3e50;
+}
