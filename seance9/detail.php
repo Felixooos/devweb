@@ -122,6 +122,7 @@ require_once 'header.php';
                     <td><?php echo date('d/m/Y', strtotime($depense['date_depense'])); ?></td>
                     <td class="rouge"><?php echo number_format($depense['montant'], 2, ',', ' '); ?> €</td>
                     <td>
+                        <a href="modifier_depense.php?id=<?php echo $depense['id']; ?>&sous_categorie_id=<?php echo $sous_categorie_id; ?>" class="btn btn-secondary btn-small">Modifier</a>
                         <a href="confirmer_suppression.php?id=<?php echo $depense['id']; ?>&sous_categorie_id=<?php echo $sous_categorie_id; ?>" class="btn btn-danger btn-small">Supprimer</a>
                     </td>
                 </tr>

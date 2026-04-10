@@ -98,6 +98,11 @@ function getBgColorClass($depense, $budget_max)
         Reste : <?php echo number_format($reste, 2, ',', ' '); ?> € 
         (Dépensé : <?php echo number_format($total_depenses, 2, ',', ' '); ?> €)
     </div>
+    <?php if ($reste >= 0): ?>
+        <div class="budget-message vert">✅ Vous êtes dans les clous, continuez comme ça !</div>
+    <?php else: ?>
+        <div class="budget-message rouge">⚠️ Attention, vous avez dépassé votre budget !</div>
+    <?php endif; ?>
     <div class="budget-barre">
         <div class="budget-barre-remplissage <?php echo getBgColorClass($total_depenses, $budget_mensuel); ?>" 
              style="width: <?php echo $pourcentage; ?>%"></div>
