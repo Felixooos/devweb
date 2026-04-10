@@ -2,13 +2,13 @@
 session_start();
 require_once 'config.php';
 
-$titrePage = 'Accueil - Mon Budget';
-require_once 'header.php';
-
 if (!isset($_SESSION['email'])) {
     header("Location: login.php");
     exit();
 }
+
+$titrePage = 'Accueil - Mon Budget';
+require_once 'header.php';
 
 $budget_mensuel = $_SESSION['budget_mensuel'];
 
